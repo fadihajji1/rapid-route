@@ -1,0 +1,58 @@
+.page-header {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.1rem;
+}
+
+.timeline-card {
+  position: relative;
+  border-left: 2px solid rgba(56, 189, 248, 0.3);
+  padding-left: 22px;
+  margin-top: 22px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 26px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -28px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.15);
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.timeline-content strong {
+  font-size: 1rem;
+}
+
+.timeline-content span,
+.timeline-content small {
+  color: #cbd5e1;
+}

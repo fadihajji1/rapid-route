@@ -1,0 +1,203 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ==================== APP SHELL (sidebar layout for internal pages) ==================== */
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef6ff 100%);
+  color: #0f172a;
+}
+
+.sidebar {
+  width: 240px;
+  background: #ffffff;
+  border-right: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 32px 18px;
+  box-shadow: inset -1px 0 0 rgba(148, 163, 184, 0.12);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.brand {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0f172a;
+  margin-bottom: 32px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav a {
+  display: block;
+  color: #334155;
+  text-decoration: none;
+  padding: 12px 14px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.nav a:hover,
+.nav a.active {
+  background: rgba(14, 165, 233, 0.1);
+  color: #0f172a;
+}
+
+.content-panel {
+  flex: 1;
+  padding: 32px;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* ==================== SHARED COMPONENT STYLES ==================== */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #0369a1;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.3rem;
+  color: #0f172a;
+}
+
+.primary-button {
+  border: none;
+  border-radius: 10px;
+  background: #0ea5e9;
+  color: white;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.2);
+}
+
+.stat-card,
+.panel,
+.table-card,
+.timeline-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+/* ==================== RESPONSIVE LAYOUT ==================== */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+    padding: 24px 14px;
+  }
+
+  .content-panel {
+    padding: 24px;
+  }
+
+  .brand {
+    font-size: 1.2rem;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 16px 20px;
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .brand {
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+  }
+
+  .nav {
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .nav a {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+
+  .content-panel {
+    padding: 20px 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 12px 16px;
+  }
+
+  .nav {
+    gap: 4px;
+  }
+
+  .nav a {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  .content-panel {
+    padding: 16px 12px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
