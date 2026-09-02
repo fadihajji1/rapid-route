@@ -7,6 +7,7 @@ interface NavItem {
   icon: string;
 }
 
+
 @Component({
   selector: 'app-landing',
   standalone: true,
@@ -25,6 +26,12 @@ export class CustomLandingPageComponent implements OnInit {
     { label: 'Services', href: '#services', icon: 'services' },
     { label: 'Portfolio', href: '#portfolio', icon: 'portfolio' },
     { label: 'Contact', href: '#contact', icon: 'contact' }
+  ];
+
+  footerItems: NavItem[] = [
+    { label: 'Privacy Policy', href: '#privacy', icon: 'privacy' },
+    { label: 'Terms of Service', href: '#terms', icon: 'terms' },
+    { label: 'Security', href: '#security', icon: 'security' }
   ];
 
   constructor(private viewportScroller: ViewportScroller) {}
