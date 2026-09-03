@@ -1,4 +1,8 @@
-<div class="landing-page" (scroll)="onContainerScroll($event)">
+<div
+  class="landing-page"
+  [class.light-theme]="theme.isLightTheme"
+  (scroll)="onContainerScroll($event)"
+>
 
   <!-- ==================== BACKGROUND ==================== -->
   <div class="floating-elements" aria-hidden="true">
@@ -6,7 +10,6 @@
     <div class="floating-circle floating-circle-2"></div>
     <div class="floating-circle floating-circle-3"></div>
   </div>
-
 
   <!-- ==================== NAVBAR ==================== -->
   <nav
@@ -130,13 +133,27 @@
 
       </ul>
 
-      <a
-        href="#cta"
-        class="primary-button"
-        (click)="navigateTo('#cta', $event)"
-      >
-        Get Started
-      </a>
+      <div class="navbar-actions">
+        <button
+          type="button"
+          class="theme-toggle"
+          [class.light-theme-active]="theme.isLightTheme"
+          [attr.aria-pressed]="theme.isLightTheme"
+          [attr.aria-label]="theme.isLightTheme ? 'Switch to dark theme' : 'Switch to light theme'"
+          title="Toggle color theme"
+          (click)="toggleTheme()"
+        >
+          <span aria-hidden="true">{{ theme.isLightTheme ? '☀' : '☾' }}</span>
+        </button>
+
+        <a
+          href="#cta"
+          class="primary-button"
+          (click)="navigateTo('#cta', $event)"
+        >
+          Get Started
+        </a>
+      </div>
 
       <!-- Mobile Toggle -->
       <button

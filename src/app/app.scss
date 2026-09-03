@@ -8,65 +8,26 @@
   box-sizing: border-box;
 }
 
-/* ==================== APP SHELL (sidebar layout for internal pages) ==================== */
+/* ==================== APP SHELL ==================== */
 
 .app-shell {
-  display: flex;
+  display: block;
   min-height: 100vh;
   background: linear-gradient(180deg, #f8fafc 0%, #eef6ff 100%);
   color: #0f172a;
 }
 
-.sidebar {
-  width: 240px;
-  background: #ffffff;
-  border-right: 1px solid rgba(148, 163, 184, 0.25);
-  padding: 32px 18px;
-  box-shadow: inset -1px 0 0 rgba(148, 163, 184, 0.12);
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  transition: transform 0.3s ease, width 0.3s ease;
-}
-
-.brand {
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #0f172a;
-  margin-bottom: 32px;
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.nav a {
-  display: block;
-  color: #334155;
-  text-decoration: none;
-  padding: 12px 14px;
-  border-radius: 12px;
-  transition: all 0.2s ease;
-  font-weight: 600;
-}
-
-.nav a:hover,
-.nav a.active {
-  background: rgba(14, 165, 233, 0.1);
-  color: #0f172a;
-}
-
 .content-panel {
-  flex: 1;
-  padding: 32px;
   min-width: 0;
+  min-height: 100vh;
+  padding: 32px;
   overflow-x: hidden;
+}
+
+.content-panel.auth-panel,
+.content-panel.not-found-panel {
+  padding: 0;
+  background: #07110d;
 }
 
 /* ==================== SHARED COMPONENT STYLES ==================== */

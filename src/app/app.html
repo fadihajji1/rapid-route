@@ -3,17 +3,11 @@
   <router-outlet />
 } @else {
   <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">RapidRoute</div>
-
-      <nav class="nav">
-        @for (item of navItems; track item.path) {
-          <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }">{{ item.label }}</a>
-        }
-      </nav>
-    </aside>
-
-    <main class="content-panel">
+    <main
+      class="content-panel"
+      [class.auth-panel]="isAuthPage"
+      [class.not-found-panel]="isNotFoundPage"
+    >
       <router-outlet />
     </main>
   </div>

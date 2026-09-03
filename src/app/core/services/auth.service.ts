@@ -9,6 +9,12 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  role?: string;
+}
+
 export interface AuthResponse {
   token?: string;
   accessToken?: string;
@@ -42,6 +48,10 @@ export class AuthService {
         }
       })
     );
+  }
+
+  register(request: RegisterRequest): Observable<unknown> {
+    return this.http.post(`${environment.apiBaseUrl}/users`, request);
   }
 
   logout(): void {

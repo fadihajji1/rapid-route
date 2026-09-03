@@ -2,11 +2,15 @@ import {
   Component,
   HostListener,
   AfterViewInit,
-  OnInit
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { ThemeService } from '../../core/services/theme.service';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 
 interface NavItem {
@@ -22,6 +26,9 @@ interface NavItem {
 }
 
 
+gsap.registerPlugin(ScrollTrigger);
+
+
 @Component({
   selector: 'app-landing-page',
   standalone: true,
@@ -32,7 +39,7 @@ interface NavItem {
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
 })
-export class LandingPageComponent implements OnInit, AfterViewInit {
+export class LandingPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /* =========================================================
      NAVIGATION
@@ -88,8 +95,11 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
 
   trackingNumber = '';
 
+  constructor(readonly theme: ThemeService) {}
+
   private programmaticNavigation = false;
   private navigationTimeout?: ReturnType<typeof setTimeout>;
+  private animationContext?: gsap.Context;
 
 
   /* =========================================================
@@ -102,13 +112,58 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    window.scrollTo({
+    this.getScrollContainer().scrollTo({
       top: 0,
       behavior: 'auto'
     });
 
     this.activeSection = 'home';
     this.updateActiveIndicator();
+    this.setupTextAnimations();
+  }
+
+
+  ngOnDestroy(): void {
+    this.animationContext?.revert();
+  }
+
+
+  private setupTextAnimations(): void {
+    const container = this.getScrollContainer();
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reducedMotion) {
+      return;
+    }
+
+    this.animationContext = gsap.context(() => {
+      const contentBlocks = container.querySelectorAll<HTMLElement>(
+        '.hero-content, .section-heading, .tracking-content, .business-content, .cta-content'
+      );
+
+      contentBlocks.forEach((contentBlock, index) => {
+        const textElements = contentBlock.querySelectorAll<HTMLElement>(
+          ':scope > .hero-badge, :scope > .eyebrow, :scope > h1, :scope > h2, :scope > p, :scope > .hero-actions, :scope > .hero-trust, :scope > .tracking-form, :scope > .business-list, :scope > .cta-actions'
+        );
+
+        gsap.from(textElements, {
+          y: 32,
+          autoAlpha: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          stagger: 0.08,
+          delay: index === 0 ? 0.15 : 0,
+          scrollTrigger: {
+            trigger: contentBlock,
+            scroller: container,
+            start: index === 0 ? 'top 85%' : 'top 72%',
+            once: true
+          }
+        });
+      });
+    }, container);
+
+    ScrollTrigger.refresh();
   }
 
 
@@ -153,9 +208,18 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
       .filter((section): section is HTMLElement => section !== null);
 
 
+    const container = this.getScrollContainer();
     const scrollPosition =
-      window.scrollY +
-      window.innerHeight * 0.25;
+      container.scrollTop +
+      container.clientHeight * 0.25;
+
+    const cta = document.getElementById('cta');
+
+    if (cta && scrollPosition >= cta.offsetTop) {
+      this.activeSection = '';
+      this.updateActiveIndicator();
+      return;
+    }
 
 
     let currentSection = 'home';
@@ -181,6 +245,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
       const activeLink = document.querySelector('.nav-link.active');
 
       if (!nav || !activeLink) {
+        this.activeIndicatorReady = false;
         return;
       }
 
@@ -224,14 +289,16 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
 
 
     const navbarOffset = 80;
+    const container = this.getScrollContainer();
 
     const elementTop =
       (element as HTMLElement).getBoundingClientRect().top +
-      window.scrollY -
+      container.scrollTop -
+      container.getBoundingClientRect().top -
       navbarOffset;
 
 
-    window.scrollTo({
+    container.scrollTo({
       top: Math.max(elementTop, 0),
       behavior: 'smooth'
     });
@@ -242,7 +309,7 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
 
 
   scrollToTop(): void {
-    window.scrollTo({
+    this.getScrollContainer().scrollTo({
       top: 0,
       behavior: 'smooth'
     });
@@ -294,6 +361,11 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     this.mobileMenuOpen = false;
 
     document.body.style.overflow = '';
+  }
+
+
+  toggleTheme(): void {
+    this.theme.toggleTheme();
   }
 
 
@@ -386,6 +458,16 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
 
     this.navbarScrolled =
       target.scrollTop > 30;
+
+    if (!this.programmaticNavigation) {
+      this.updateActiveSection();
+    }
+
+  }
+
+
+  private getScrollContainer(): HTMLElement {
+    return document.querySelector('.landing-page') as HTMLElement;
 
   }
 

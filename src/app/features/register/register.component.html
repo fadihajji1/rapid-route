@@ -1,0 +1,139 @@
+<main class="register-page" [class.light-theme]="theme.isLightTheme">
+  <svg class="glass-filter-defs" aria-hidden="true" focusable="false">
+    <filter id="register-glass-distortion" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.009 0.012" numOctaves="2" seed="11" result="noise" />
+      <feGaussianBlur in="noise" stdDeviation="3" result="softNoise" />
+      <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="55" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
+  <div class="register-layout">
+    <a routerLink="/" class="home-button">← Home</a>
+    <section class="register-panel" aria-labelledby="register-title">
+    <a routerLink="/" class="register-brand" aria-label="Return to RapidRoute home">
+      <span class="register-brand-mark" aria-hidden="true">R</span>
+      <span>RapidRoute</span>
+    </a>
+
+    <div class="register-heading">
+      <p class="register-eyebrow">Get started</p>
+      <h1 id="register-title">Create your profile</h1>
+      <p>Join one connected view for every delivery journey.</p>
+    </div>
+
+    <form class="register-form" (ngSubmit)="submit()" #registerForm="ngForm" novalidate>
+      <label for="name">Full name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        [(ngModel)]="name"
+        autocomplete="name"
+        placeholder="Enter your full name"
+        required
+      />
+
+      <label for="email">Email address</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        autocomplete="email"
+        placeholder="you@example.com"
+        required
+        email
+      />
+
+      <div class="register-field-heading">
+        <label for="password">Password</label>
+        <span>{{ passwordStrengthLabel }}</span>
+      </div>
+      <div class="password-field">
+        <input
+          id="password"
+          name="password"
+          [type]="passwordVisible ? 'text' : 'password'"
+          [(ngModel)]="password"
+          autocomplete="new-password"
+          placeholder="Create a password"
+          required
+        />
+        <button
+          type="button"
+          class="password-toggle"
+          [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'"
+          (click)="passwordVisible = !passwordVisible"
+        >
+          @if (passwordVisible) {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          } @else {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          }
+        </button>
+      </div>
+      <div class="strength-meter" aria-hidden="true">
+        @for (segment of [1, 2, 3, 4, 5]; track segment) {
+          <span [class.filled]="passwordStrength >= segment"></span>
+        }
+      </div>
+
+      <label for="confirmPassword">Confirm password</label>
+      <div class="password-field">
+        <input
+          id="confirmPassword"
+          name="confirmPassword"
+          [type]="confirmPasswordVisible ? 'text' : 'password'"
+          [(ngModel)]="confirmPassword"
+          autocomplete="new-password"
+          placeholder="Repeat your password"
+          required
+        />
+        <button
+          type="button"
+          class="password-toggle"
+          [attr.aria-label]="confirmPasswordVisible ? 'Hide password confirmation' : 'Show password confirmation'"
+          (click)="confirmPasswordVisible = !confirmPasswordVisible"
+        >
+          @if (confirmPasswordVisible) {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          } @else {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          }
+        </button>
+      </div>
+
+      @if (errorMessage) {
+        <p class="register-error" role="alert">{{ errorMessage }}</p>
+      }
+
+      <button type="submit" class="register-submit" [disabled]="submitting || registerForm.invalid">
+        {{ submitting ? 'Creating profile...' : 'Create Profile' }}
+      </button>
+    </form>
+
+    <div class="register-divider"><span>or</span></div>
+
+    <button type="button" class="google-button" (click)="googleSignIn()">
+      <span class="google-mark" aria-hidden="true">G</span>
+      Continue with Google
+    </button>
+
+      <p class="register-footer">
+        Already have an account? <a routerLink="/login">Sign in</a>
+      </p>
+    </section>
+  </div>
+</main>

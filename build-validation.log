@@ -1,0 +1,22 @@
+npm notice run rapid-route@0.0.0 build
+npm notice run ng build --no-progress
+Initial chunk files | Names                   |  Raw size | Estimated transfer size
+main-EDZ4SSPF.js    | main                    | 265.95 kB |                71.98 kB
+styles-6YWEBLUS.css | styles                  | 369 bytes |               369 bytes
+
+                    | Initial total           | 266.32 kB |                72.35 kB
+
+Lazy chunk files    | Names                   |  Raw size | Estimated transfer size
+chunk-B4Izhgpc.js   | landing-page-component  |  86.07 kB |                17.65 kB
+chunk-yBKpeQ1J.js   | dashboard-component     |   3.65 kB |                 1.28 kB
+chunk-CrqMw8RQ.js   | shipment-list-component |   2.46 kB |               996 bytes
+chunk-BVCd3Pj6.js   | tracking-component      |   2.28 kB |               934 bytes
+
+Application bundle generation failed. [19.761 seconds] - 2026-09-02T15:14:10.959Z
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1msrc/app/features/landing/landing-page.component.scss exceeded maximum budget. Budget 4.00 kB was not met by 20.39 kB with a total of 24.39 kB.[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1msrc/app/features/landing/landing-page.component.scss exceeded maximum budget. Budget 8.00 kB was not met by 16.39 kB with a total of 24.39 kB.[0m
+
+
